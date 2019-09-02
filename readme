@@ -1,0 +1,32 @@
+signup: done
+login: done
+logout: done
+get profile: done
+delete: done
+update: done
+add profile pic: done
+
+find others: done
+add friend request: done
+get friend requests: done
+approve/deny request: done
+remove friend: done
+get friend list: done
+get friends profile: done
+get posts of friend:::::
+
+add text post: done
+edit post (own): done
+delete post (own): done
+like post: done
+get all public posts:::::
+
+TODO: delete friends if user is deleted
+TODO: add middleware to confirm if you are friend
+
+Issues:
+1. Can find all existing users while trying to find possible firnds. This is an open friends app. So who's on this app is public.
+2. User can spam likes of others' posts (No dislikes. Can't like your own posts. And if you make a new user to like posts, well lets not talk about that)
+3. Can't block getting new friend requests or requests from denied users. (You can always ignore them)
+4. You can't add image posts yet. This is not instagram. This was made in a day. Deal with it.
+5. More privacy features can be added. I'm not doing that though. I'm not really launching this as a new startup right.
