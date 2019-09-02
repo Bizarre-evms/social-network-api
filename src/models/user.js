@@ -125,6 +125,14 @@ userSchema.pre('save', async function (next) {
 userSchema.pre('remove', async function (next) {
     const user = this
     await Post.deleteMany({ owner: user._id })
+    const friends = user.friends
+    for (const friend of friends) {
+        const friendUser = await User.findOne({email: friend.friend})
+        if (friendUser) {
+            friendUser.friends = friendUser.friends.filter((friend) => friend.friend !== user.email)
+            await friendUser.save()
+        }
+    }
     next()
 })
 

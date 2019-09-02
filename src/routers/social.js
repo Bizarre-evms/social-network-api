@@ -99,7 +99,6 @@ router.get('/friends/:email', auth, async (req,res) => {
     const frienduser = await User.findOne({email})
     const friendProfile = frienduser.toObject()
     Object.keys(friendProfile).forEach((key) => {
-        console.log(key)
         if (forbiddenKeys.includes(key)) {
             delete friendProfile[key]
         }
@@ -113,6 +112,12 @@ router.get('/friends/:email/posts', auth, async (req, res) => {
     const isFriend = user.friends.filter((friend) => friend.friend === email)
     if (isFriend.length === 0) {
         return res.status(404).send({'Status': `${email} is not your friend. Unable to see his posts`})
+    }
+    const match = req.query
+    const sort = {}
+    if (req.query.sortBy) {
+        const parts = req.query.sortBy.split('_')
+        sort[parts[0]] = parts[1] === 'desc' ? -1 : 1
     }
     const frienduser = await User.findOne({email})
     try {

@@ -1,28 +1,12 @@
-signup: done
-login: done
-logout: done
-get profile: done
-delete: done
-update: done
-add profile pic: done
+Features: 
+User Features: 
+Signup, Login, Logout, Get profile, Delete, Update, Add/Delete profile pic
 
-find others: done
-add friend request: done
-get friend requests: done
-approve/deny request: done
-remove friend: done
-get friend list: done
-get friends profile: done
-get posts of friend:::::
+Post Features: 
+Add post, Udit post (own), Delete post (own), Like post, Get all public posts
 
-add text post: done
-edit post (own): done
-delete post (own): done
-like post: done
-get all public posts:::::
-
-TODO: delete friends if user is deleted
-TODO: add middleware to confirm if you are friend
+Social Features: 
+Find others, Add friend request, Get friend requests, Approve/deny request, Remove friend, Gget friend list, Get friends profile, Get posts of friend
 
 Issues:
 1. Can find all existing users while trying to find possible firnds. This is an open friends app. So who's on this app is public.

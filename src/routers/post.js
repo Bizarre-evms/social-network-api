@@ -19,11 +19,8 @@ router.post('/posts', auth, async (req, res) => {
 })
 
 router.get('/posts', auth, async (req, res) => {
-    const match = {}
+    const match = req.query
     const sort = {}
-    if (req.query.completed) {
-        match.completed = req.query.completed === 'true'
-    }
     if (req.query.sortBy) {
         const parts = req.query.sortBy.split('_')
         sort[parts[0]] = parts[1] === 'desc' ? -1 : 1
@@ -44,6 +41,18 @@ router.get('/posts', auth, async (req, res) => {
     }
 })
 
+router.get('/posts/public', auth, async (req, res) => {
+    const publicPosts = await Post.find({ 'privacy': 'ALL' })
+    let response = []
+    for (let post of publicPosts) {
+        await post.populate('owner').execPopulate()
+        post = post.toObject()
+        post['owner'] = post.owner.email
+        response.push(post)
+    }
+    return res.send(response)
+})
+
 router.get('/posts/:id', auth, async (req, res) => {
     const _id = req.params.id
     try {
@@ -60,7 +69,7 @@ router.get('/posts/:id', auth, async (req, res) => {
 router.post('/posts/:id/like', auth, async (req, res) => {
     const _id = req.params.id
     try {
-        const post = await Post.findOne({ _id, owner: {$ne: req.user._id} })
+        const post = await Post.findOne({ _id, owner: { $ne: req.user._id } })
         if (!post) {
             return res.status(404).send()
         }
@@ -95,7 +104,7 @@ router.patch('/posts/:id', auth, async (req, res) => {
 
 router.delete('/posts/:id', auth, async (req, res) => {
     try {
-        const post = await Post.findOneAndDelete({ _id: req.params.id, owner: req.user._id})
+        const post = await Post.findOneAndDelete({ _id: req.params.id, owner: req.user._id })
         if (!post) {
             return res.status(404).send()
         }
@@ -104,10 +113,5 @@ router.delete('/posts/:id', auth, async (req, res) => {
         res.status(400).send()
     }
 })
-
-router.get('/posts/public', auth, async (req, res) => {
-    //get all public posts
-})
-
 
 module.exports = router
